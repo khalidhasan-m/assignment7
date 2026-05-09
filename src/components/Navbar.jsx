@@ -1,32 +1,39 @@
 import { ImStatsDots } from "react-icons/im";
 import { IoMdHome } from "react-icons/io";
 import { IoTimeOutline } from "react-icons/io5";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
+  const linkStyle = ({ isActive }) =>
+    `btn btn-ghost flex gap-2 items-center ${
+      isActive ? "font-bold bg-[#1F5B4B] text-white" : ""
+    }`;
+
   return (
     <div className="navbar bg-base-100 shadow-sm flex justify-between px-3 sticky top-0 z-50">
       
       <div>
-        <Link to="/" className="btn btn-ghost text-xl">
+        <NavLink to="/" className="btn btn-ghost text-xl">
           KeenKeeper
-        </Link>
+        </NavLink>
       </div>
 
       <div>
         <ul>
           <li className="flex gap-4 justify-around px-3">
-            <Link className="btn btn-ghost" to="/">
+
+            <NavLink to="/" className={linkStyle}>
               <IoMdHome /> Home
-            </Link>
+            </NavLink>
 
-            <Link className="btn btn-ghost" to="/timeline">
+            <NavLink to="/timeline" className={linkStyle}>
               <IoTimeOutline /> Timeline
-            </Link>
+            </NavLink>
 
-            <Link className="btn btn-ghost" to="/stats">
+            <NavLink to="/stats" className={linkStyle}>
               <ImStatsDots /> Stats
-            </Link>
+            </NavLink>
+
           </li>
         </ul>
       </div>
