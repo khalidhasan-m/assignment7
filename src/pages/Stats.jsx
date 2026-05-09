@@ -38,7 +38,6 @@ const Stats = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 px-4 py-12">
       <div className="max-w-5xl mx-auto">
-
         {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800">
@@ -51,7 +50,6 @@ const Stats = () => {
 
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8">
-
           {/* Stats Summary */}
           <div className="grid grid-cols-3 gap-4 mb-8 text-center">
             <div className="bg-gray-50 rounded-2xl p-4">
@@ -61,14 +59,14 @@ const Stats = () => {
 
             <div className="bg-gray-50 rounded-2xl p-4">
               <p className="text-2xl font-bold text-green-900">
-                {data.find(d => d.name === "Call")?.value || 0}
+                {data.find((d) => d.name === "Call")?.value || 0}
               </p>
               <p className="text-xs text-gray-500">Calls</p>
             </div>
 
             <div className="bg-gray-50 rounded-2xl p-4">
               <p className="text-2xl font-bold text-violet-600">
-                {data.find(d => d.name === "Video")?.value || 0}
+                {data.find((d) => d.name === "Video")?.value || 0}
               </p>
               <p className="text-xs text-gray-500">Videos</p>
             </div>
@@ -113,7 +111,6 @@ const Stats = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
-
         </div>
       </div>
     </div>
