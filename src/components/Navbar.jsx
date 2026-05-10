@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-sm flex justify-between px-3 sticky top-0 z-50">
-      
+
       <div>
         <NavLink to="/" className="btn btn-ghost text-xl">
           KeenKeeper
@@ -20,18 +20,21 @@ const Navbar = () => {
 
       <div>
         <ul>
-          <li className="flex gap-4 justify-around px-3">
+          <li className="flex gap-1 md:gap-4 justify-around px-1 md:px-3 flex-wrap">
 
             <NavLink to="/" className={linkStyle}>
-              <IoMdHome /> Home
+              <IoMdHome />
+              <span className="hidden md:inline">Home</span>
             </NavLink>
 
             <NavLink to="/timeline" className={linkStyle}>
-              <IoTimeOutline /> Timeline
+              <IoTimeOutline />
+              <span className="hidden md:inline">Timeline</span>
             </NavLink>
 
             <NavLink to="/stats" className={linkStyle}>
-              <ImStatsDots /> Stats
+              <ImStatsDots />
+              <span className="hidden md:inline">Stats</span>
             </NavLink>
 
           </li>

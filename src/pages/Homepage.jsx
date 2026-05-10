@@ -4,7 +4,7 @@ import StatusCard from "../components/StatusCard";
 
 const Homepage = () => {
   return (
-    <div className="px-61.25 mt-20 bg-base-200">
+    <div className="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 mt-20 bg-base-200">
       <Banner />
       <StatusCard />
       <Friends />

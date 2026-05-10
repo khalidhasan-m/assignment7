@@ -7,7 +7,9 @@ import { toast } from "react-toastify";
 const FriendDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [friend, setFriend] = useState(null);
+
   const [contacts, setContacts] = useState(() => {
     const saved = localStorage.getItem("contactLog");
     return saved ? JSON.parse(saved) : [];
@@ -30,15 +32,24 @@ const FriendDetails = () => {
       method,
       date: new Date().toISOString(),
     };
+
     const updated = [log, ...contacts];
+
     setContacts(updated);
-    localStorage.setItem("contactLog", JSON.stringify(updated));
-    toast.success(`${method} check-in logged with ${friend.name}!`);
+
+    localStorage.setItem(
+      "contactLog",
+      JSON.stringify(updated)
+    );
+
+    toast.success(
+      `${method} check-in logged with ${friend.name}!`
+    );
   };
 
   if (!friend)
     return (
-      <p className="text-center mt-20 text-gray-400">
+      <p className="mt-20 text-center text-gray-400">
         Loading...
       </p>
     );
@@ -57,45 +68,48 @@ const FriendDetails = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-10">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-100 px-4 py-6 sm:py-10">
+      
+      <div className="mx-auto max-w-6xl">
 
+        {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 transition"
+          className="mb-6 flex items-center gap-2 text-sm text-gray-500 transition hover:text-gray-800"
         >
           ← Back
         </button>
 
-        <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+        {/* Main Layout */}
+        <div className="flex flex-col gap-6 lg:flex-row">
 
-          {/* ── LEFT ── */}
-          <div className="flex flex-col gap-3 lg:w-56 shrink-0">
+          {/* ───────── LEFT SIDE ───────── */}
+          <div className="flex w-full flex-col gap-4 lg:w-72 shrink-0">
 
-            {/* Profile card */}
-            <div className="flex-1 rounded-2xl border border-gray-200 bg-white p-6 flex flex-col items-center text-center gap-3">
+            {/* Profile Card */}
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
 
               <img
                 src={friend.picture}
                 alt={friend.name}
-                className="h-20 w-20 rounded-full object-cover"
+                className="h-24 w-24 rounded-full object-cover ring-4 ring-gray-100"
               />
 
-              <p className="font-semibold text-gray-800 text-base">
+              <h2 className="text-xl font-bold text-gray-800">
                 {friend.name}
-              </p>
+              </h2>
 
-              {/* STATUS */}
+              {/* Status */}
               <span
-                className={`rounded-full capitalize px-5 py-2 text-sm font-medium text-white ${
+                className={`rounded-full px-5 py-2 text-sm font-medium capitalize text-white ${
                   statusStyles[friend.status]
                 }`}
               >
                 {friend.status}
               </span>
 
-              {/* TAGS */}
-              <div className="flex flex-wrap justify-center gap-1.5">
+              {/* Tags */}
+              <div className="flex flex-wrap justify-center gap-2">
                 {friend.tags?.map((tag, i) => (
                   <span
                     key={i}
@@ -106,111 +120,130 @@ const FriendDetails = () => {
                 ))}
               </div>
 
-              <p className="text-xs text-gray-400 italic leading-relaxed">
+              {/* Bio */}
+              <p className="wrap-break-word text-xs italic leading-relaxed text-gray-400">
                 "{friend.bio?.split(".")[0]}."
               </p>
 
-              <p className="text-xs text-gray-400">
-                Preferred: email
+              {/* Email */}
+              <p className="break-all text-xs text-gray-400">
+                {friend.email}
               </p>
             </div>
 
-            {/* Actions */}
-            <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition border-b border-gray-100">
-                <FiBell className="text-gray-500 text-base" /> Snooze 2 Weeks
+            {/* Action Buttons */}
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+
+              <button className="flex w-full items-center gap-3 border-b border-gray-100 px-5 py-4 text-sm text-gray-700 transition hover:bg-gray-50">
+                <FiBell className="text-base text-gray-500" />
+                Snooze 2 Weeks
               </button>
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition border-b border-gray-100">
-                <FiArchive className="text-gray-500 text-base" /> Archive
+
+              <button className="flex w-full items-center gap-3 border-b border-gray-100 px-5 py-4 text-sm text-gray-700 transition hover:bg-gray-50">
+                <FiArchive className="text-base text-gray-500" />
+                Archive
               </button>
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-red-500 hover:bg-red-50 transition">
-                <FiTrash2 className="text-red-400 text-base" /> Delete
+
+              <button className="flex w-full items-center gap-3 px-5 py-4 text-sm text-red-500 transition hover:bg-red-50">
+                <FiTrash2 className="text-base text-red-400" />
+                Delete
               </button>
+
             </div>
           </div>
 
-          {/* ── RIGHT ── */}
-          <div className="flex flex-col gap-4 flex-1 min-w-0">
+          {/* ───────── RIGHT SIDE ───────── */}
+          <div className="flex flex-1 flex-col gap-5">
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 flex flex-col items-center justify-center text-center">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-sm">
                 <p className="text-3xl font-bold text-gray-800">
                   {friend.days_since_contact}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="mt-1 text-xs text-gray-400">
                   Days Since Contact
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-sm">
                 <p className="text-3xl font-bold text-gray-800">
                   {friend.goal}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="mt-1 text-xs text-gray-400">
                   Goal (Days)
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-sm">
                 <p className="text-xl font-bold text-gray-800">
                   {formatDate(friend.next_due_date)}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="mt-1 text-xs text-gray-400">
                   Next Due
                 </p>
               </div>
+
             </div>
 
-            {/* Goal */}
-            <div className="rounded-2xl border border-gray-200 bg-white p-5">
-              <div className="flex justify-between items-center mb-3">
+            {/* Relationship Goal */}
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+
+              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
                 <p className="text-base font-semibold text-gray-800">
                   Relationship Goal
                 </p>
-                <button className="text-xs border border-gray-200 rounded-lg px-4 py-1.5 text-gray-500 hover:bg-gray-50 transition">
+
+                <button className="rounded-lg border border-gray-200 px-4 py-2 text-xs text-gray-500 transition hover:bg-gray-50">
                   Edit
                 </button>
+
               </div>
 
-              <p className="text-sm text-gray-500">
+              <p className="text-sm leading-relaxed text-gray-500">
                 Connect every{" "}
                 <span className="font-bold text-gray-800">
                   {friend.goal} days
                 </span>
               </p>
+
             </div>
 
             {/* Quick Check-In */}
-            <div className="flex-1 rounded-2xl border border-gray-200 bg-white p-5">
-              <p className="text-base font-semibold text-gray-800 mb-4">
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+
+              <p className="mb-4 text-base font-semibold text-gray-800">
                 Quick Check-In
               </p>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+
                 <button
                   onClick={() => handleCheckIn("Call")}
-                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-4 text-sm text-gray-700 hover:bg-gray-50 transition"
+                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-5 text-sm text-gray-700 transition hover:bg-gray-50"
                 >
-                  <BsTelephone className="text-xl text-gray-700" />
+                  <BsTelephone className="text-2xl text-gray-700" />
                   Call
                 </button>
 
                 <button
                   onClick={() => handleCheckIn("Text")}
-                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-4 text-sm text-gray-700 hover:bg-gray-50 transition"
+                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-5 text-sm text-gray-700 transition hover:bg-gray-50"
                 >
-                  <BsChatSquareText className="text-xl text-gray-700" />
+                  <BsChatSquareText className="text-2xl text-gray-700" />
                   Text
                 </button>
 
                 <button
                   onClick={() => handleCheckIn("Video")}
-                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-4 text-sm text-gray-700 hover:bg-gray-50 transition"
+                  className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 py-5 text-sm text-gray-700 transition hover:bg-gray-50"
                 >
-                  <BsCameraVideo className="text-xl text-gray-700" />
+                  <BsCameraVideo className="text-2xl text-gray-700" />
                   Video
                 </button>
+
               </div>
             </div>
 

@@ -26,22 +26,17 @@ const Timeline = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  //  FILTER (Call/Text/Video + search)
   let filtered = contacts.filter((c) => {
     const matchFilter = filter === "All" || c.method === filter;
-
     const matchSearch =
       c.friendName.toLowerCase().includes(search.toLowerCase()) ||
       c.method.toLowerCase().includes(search.toLowerCase());
-
     return matchFilter && matchSearch;
   });
 
-  //  SORT
   filtered.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-
     return sort === "newest" ? dateB - dateA : dateA - dateB;
   });
 
@@ -56,7 +51,7 @@ const Timeline = () => {
     <div className="min-h-screen bg-gray-100 px-4 py-10">
       <div className="max-w-2xl mx-auto">
 
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
           Timeline
         </h2>
 
@@ -71,31 +66,32 @@ const Timeline = () => {
             className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white focus:outline-none"
           />
 
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white cursor-pointer"
-          >
-            <option value="All">All</option>
-            <option value="Call">Call</option>
-            <option value="Text">Text</option>
-            <option value="Video">Video</option>
-          </select>
+          <div className="flex gap-3 sm:contents">
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="flex-1 sm:flex-none border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white cursor-pointer"
+            >
+              <option value="All">All</option>
+              <option value="Call">Call</option>
+              <option value="Text">Text</option>
+              <option value="Video">Video</option>
+            </select>
 
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white cursor-pointer"
-          >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-          </select>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="flex-1 sm:flex-none border border-gray-200 rounded-lg px-4 py-2 text-sm bg-white cursor-pointer"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
 
         </div>
 
         {/* TIMELINE LIST */}
         <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-
           {filtered.length === 0 ? (
             <p className="text-center text-gray-400 text-sm py-12">
               No check-ins found.
@@ -104,9 +100,8 @@ const Timeline = () => {
             <ul className="divide-y divide-gray-100">
               {filtered.map((log, i) => {
                 const config = methodConfig[log.method];
-
                 return (
-                  <li key={i} className="flex items-center gap-4 px-5 py-4">
+                  <li key={i} className="flex items-center gap-3 md:gap-4 px-4 md:px-5 py-4">
 
                     {/* Icon */}
                     <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
@@ -115,15 +110,10 @@ const Timeline = () => {
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-800">
-                        <span className="font-semibold">
-                          {config.label}
-                        </span>{" "}
-                        <span className="text-gray-500">
-                          with {log.friendName}
-                        </span>
+                      <p className="text-sm text-gray-800 truncate">
+                        <span className="font-semibold">{config.label}</span>{" "}
+                        <span className="text-gray-500">with {log.friendName}</span>
                       </p>
-
                       <p className="text-xs text-gray-400 mt-0.5">
                         {formatDate(log.date)}
                       </p>
@@ -134,8 +124,8 @@ const Timeline = () => {
               })}
             </ul>
           )}
-
         </div>
+
       </div>
     </div>
   );

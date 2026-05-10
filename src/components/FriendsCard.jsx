@@ -12,7 +12,7 @@ const FriendsCard = ({ friend }) => {
   return (
     <div
       onClick={() => navigate(`/friends/${friend.id}`)}
-      className="w-72 rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+      className="w-full max-w-72 rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
     >
       <div className="flex justify-center">
         <img
